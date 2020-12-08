@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://servicePointEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.tirefitting.web.screens.servicepoint">
+    <data>
+        <instance id="servicePointDc"
+                  class="com.company.tirefitting.entity.ServicePoint">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="servicePointDc">
+            <column width="350px">
+                <textField id="cityField" caption="msg://city" required="true"/>
+                <textField id="streetField" caption="msg://street" required="true"/>
+                <textField id="buildingField" caption="msg://building" required="true"/>
+                <textField id="addressField" visible="false" property="address"/>
+                <textField id="countOfStuffField" property="countOfStuff" caption="msg://count_of_stuff" required="true"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" caption="Ok"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,12 +1,13 @@
 package com.company.tirefitting.entity;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Table(name = "TIREFITTING_REQUEST")
 @Entity(name = "tirefitting_Request")
@@ -23,20 +24,20 @@ public class Request extends StandardEntity {
     @Max(18)
     private Integer wheelRadius;
 
-    @Column
+    @Column(name = "time")
     @NotNull
-    private DateTime time;
+    private LocalDateTime time;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = ServicePoint.class)
     @JoinColumn(name = "servicePoint")
     private ServicePoint servicePoint;
 
-    public String getRequestType() {
-        return requestType;
+    public RequestType getRequestType() {
+        return requestType == null ? null : RequestType.fromId(requestType);
     }
 
-    public void setRequestType(String requestType) {
-        this.requestType = requestType;
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType == null ? null : requestType.getId();
     }
 
     public Integer getWheelRadius() {
@@ -55,11 +56,11 @@ public class Request extends StandardEntity {
         this.servicePoint = servicePoint;
     }
 
-    public DateTime getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 }

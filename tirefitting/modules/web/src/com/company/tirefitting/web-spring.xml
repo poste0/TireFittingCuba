@@ -7,5 +7,13 @@
     <context:component-scan base-package="com.company.tirefitting"/>
     
     <gui:screens base-packages="com.company.tirefitting.web"/>
+    <bean id="tirefitting_proxyCreator" class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+        <property name="serverSelector" ref="cuba_ServerSelector"/>
+        <property name="remoteServices">
+            <map>
+                <entry key="tirefitting_RequestService" value="com.company.tirefitting.service.RequestService"/>
+            </map>
+        </property>
+    </bean>
 
 </beans>

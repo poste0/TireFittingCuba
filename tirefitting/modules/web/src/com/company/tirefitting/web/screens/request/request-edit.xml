@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://requestEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.tirefitting.web.screens.request">
+    <data>
+        <instance id="requestDc"
+                  class="com.company.tirefitting.entity.Request">
+            <view extends="_local">
+                <property name="servicePoint" view="_minimal">
+                    <property name="address"/>
+                    <property name="countOfStuff"/>
+                </property>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="requestDc">
+            <column width="350px">
+                <lookupField id="requestTypeField" property="requestType"/>
+                <textField id="wheelRadiusField" property="wheelRadius"/>
+                <datePicker id="dateField" property="time" datatype="localDateTime"/>
+                <timeField id="timeField" caption="msg://Time" datatype="localTime" required="true"/>
+                <pickerField id="servicePointField" property="servicePoint" required="true" >
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" caption="msg://ok"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

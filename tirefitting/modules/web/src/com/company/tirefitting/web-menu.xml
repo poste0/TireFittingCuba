@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-tirefitting" insertBefore="administration" caption="mainMsg://menu_config.application-tirefitting">
+        <item screen="tirefitting_Request.browse" caption="mainMsg://menu_config.tirefitting_Request.browse"/>
+        <item screen="tirefitting_ServicePoint.browse" caption="mainMsg://menu_config.tirefitting_ServicePoint.browse"/>
     </menu>
 </menu-config>
