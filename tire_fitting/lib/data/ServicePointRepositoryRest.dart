@@ -12,7 +12,7 @@ class ServicePointRepositoryRest extends ServicePointRepository {
   String entityUrl;
   String baseAddress;
 
-  ServicePointRepositoryRest() : super.create(){
+  ServicePointRepositoryRest() : super.create() {
     this.baseAddress = url + '/app/rest/v2';
     this.entityUrl = baseAddress + '/entities/tirefitting_ServicePoint';
   }
@@ -20,70 +20,60 @@ class ServicePointRepositoryRest extends ServicePointRepository {
   @override
   Future<List<ServicePoint>> getAll() async {
     try {
-      Response response = await http.get(
-          entityUrl,
-          headers: {
-            'Authorization': 'Bearer ' + token
-          }
-      ).timeout(Duration(seconds: 10));
+      Response response = await http.get(entityUrl, headers: {
+        'Authorization': 'Bearer ' + token
+      }).timeout(Duration(seconds: 10));
 
-
-      List<ServicePoint> servicePoints = (jsonDecode(response.body) as List).map((e) => ServicePoint.fromJson(e)).toList();
+      List<ServicePoint> servicePoints = (jsonDecode(response.body) as List)
+          .map((e) => ServicePoint.fromJson(e))
+          .toList();
       return servicePoints;
-    }
-    on TimeoutException {
+    } on TimeoutException {
       return super.getAll();
     }
   }
 
   @override
   Future<ServicePoint> getById(String id) async {
-    try{
-      Response response = await http.get(
-        entityUrl + '?id=' + id,
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
-      ).timeout(Duration(seconds: 10));
+    try {
+      Response response = await http.get(entityUrl + '?id=' + id, headers: {
+        'Authorization': 'Bearer ' + token
+      }).timeout(Duration(seconds: 10));
 
       return ServicePoint.fromJson(jsonDecode(response.body));
-    }
-    on TimeoutException{
+    } on TimeoutException {
       return super.getById(id);
     }
   }
 
   @override
-  Future<void> add(ServicePoint servicePoint){
-    try{
-      return http.post(
-        entityUrl,
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/json',
-
-        },
-        body: jsonEncode(servicePoint.toMap())
-      ).timeout(Duration(seconds: 10));
-
-    }
-    on TimeoutException{
+  Future<void> add(ServicePoint servicePoint) {
+    try {
+      return http
+          .post(entityUrl,
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+              },
+              body: jsonEncode(servicePoint.toMap()))
+          .timeout(Duration(seconds: 10));
+    } on TimeoutException {
       return super.add(servicePoint);
     }
   }
 
   Future<void> remove(ServicePoint servicePoint) async {
-    try{
+    try {
       http.Response response = await http.get(
-          baseAddress + "/services/tirefitting_ServicePointService/delete?id=" + servicePoint.id,
+          baseAddress +
+              "/services/tirefitting_ServicePointService/delete?id=" +
+              servicePoint.id,
           headers: {
             'Authorization': 'Bearer ' + token
-          }
-      ).timeout(Duration(seconds: 10));
+          }).timeout(Duration(seconds: 10));
 
       return response;
-    }
-    on TimeoutException{
+    } on TimeoutException {
       return super.remove(servicePoint);
     }
   }

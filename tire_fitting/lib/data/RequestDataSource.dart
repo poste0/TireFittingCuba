@@ -3,8 +3,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../entity/Request.dart';
 
-class RequestDataSource extends CalendarDataSource{
-  RequestDataSource(List<Request> requests){
+class RequestDataSource extends CalendarDataSource {
+  RequestDataSource(List<Request> requests) {
     print("source");
     appointments = requests;
   }
@@ -22,6 +22,10 @@ class RequestDataSource extends CalendarDataSource{
 
   @override
   DateTime getEndTime(int index) {
-    return appointments[index].time.add(Duration(seconds: appointments[index].requestType.getDuration(appointments[index].wheelRadius).round()));
+    return appointments[index].time.add(Duration(
+        seconds: appointments[index]
+            .requestType
+            .getDuration(appointments[index].wheelRadius)
+            .round()));
   }
 }

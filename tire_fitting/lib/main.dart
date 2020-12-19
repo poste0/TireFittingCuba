@@ -25,7 +25,6 @@ String token = "";
 String url = "http://192.168.0.58:8080";
 
 class LoginPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     TextEditingController loginController = TextEditingController();
@@ -56,58 +55,52 @@ class LoginPage extends StatelessWidget {
               TextField(
                 controller: urlController,
                 decoration: InputDecoration(
-                  labelText: "Url",
-                  labelStyle: getMainStyle(context)
-                ),
+                    labelText: "Url", labelStyle: getMainStyle(context)),
               ),
               Container(
                 child: Builder(
                   builder: (context) => FlatButton(
                       onPressed: () {
                         url = urlController.value.text;
-                          http
-                              .post(
-                              url + "/app/rest/v2/oauth/token",
-                              headers: {
-                                "Authorization":
-                                "Basic dGlyZWZpdHRpbmctelBKSEo1bUU6YTViNGFiZjQxZDRmZmJlYTQ3MGNjZWFkNDlhZDllYzcxMzliYTg5NThjNzljN2IyYWIyZGM3NzExMDE1ZGVlMQ==",
-                                "Content-Type":
-                                "application/x-www-form-urlencoded"
-                              },
-                              body: {
-                                "grant_type": "password",
-                                "username": loginController.value.text,
-                                "password": passwordController.value.text
-                              })
-                              .timeout(Duration(seconds: 10))
-                              .then((value) {
-                            if (value.statusCode == 200) {
-                              token = jsonDecode(value.body)['access_token'];
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => MyApps()));
-                            }
-                            else {
-                              Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text("Wrong login or password"),
-                                  )
-                              );
-                            }
-                          }).catchError((error){
-                            if(error is TimeoutException){
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(FlutterI18n.translate(context, 'no_internet')),
-                                )
-                              );
-                              Future.delayed(Duration(seconds: 1), (){
-                                Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => MyApps()
+                        http
+                            .post(url + "/app/rest/v2/oauth/token", headers: {
+                              "Authorization":
+                                  "Basic dGlyZWZpdHRpbmctelBKSEo1bUU6YTViNGFiZjQxZDRmZmJlYTQ3MGNjZWFkNDlhZDllYzcxMzliYTg5NThjNzljN2IyYWIyZGM3NzExMDE1ZGVlMQ==",
+                              "Content-Type":
+                                  "application/x-www-form-urlencoded"
+                            }, body: {
+                              "grant_type": "password",
+                              "username": loginController.value.text,
+                              "password": passwordController.value.text
+                            })
+                            .timeout(Duration(seconds: 10))
+                            .then((value) {
+                              if (value.statusCode == 200) {
+                                token = jsonDecode(value.body)['access_token'];
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyApps()));
+                              } else {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Wrong login or password"),
                                 ));
-                              });
-
-                            }
-                          });
+                              }
+                            })
+                            .catchError((error) {
+                              if (error is TimeoutException) {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(FlutterI18n.translate(
+                                      context, 'no_internet')),
+                                ));
+                                Future.delayed(Duration(seconds: 1), () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyApps()));
+                                });
+                              }
+                            });
                       },
                       child: Text("Ok")),
                 ),
@@ -179,7 +172,7 @@ class _MyAppsState extends State<MyApps> {
 
   Locale locale;
 
-  changeLanguage(Locale locale){
+  changeLanguage(Locale locale) {
     setState(() {
       this.locale = locale;
     });
@@ -188,34 +181,38 @@ class _MyAppsState extends State<MyApps> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
-        FlutterI18nDelegate(
-            useCountryCode: true,
-            path: "assets/flutter_i18n",
-            forcedLocale: locale),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
-      ],
-      supportedLocales: [const Locale('en', 'US'), const Locale('ru', 'RU')],
-      title: 'Flutter Demo',
-      theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: TextTheme(
-              headline1: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey),
-              headline2: TextStyle(
-                  fontFamily: "Poppins", fontSize: 14, color: Colors.grey))),
-      home: MyHomePage(currentLocale: locale, changeLanguage: changeLanguage,),
-      locale: locale
-    );
+        localizationsDelegates: [
+          FlutterI18nDelegate(
+              useCountryCode: true,
+              path: "assets/flutter_i18n",
+              forcedLocale: locale),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'),
+          const Locale('ru', 'RU')
+        ],
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            textTheme: TextTheme(
+                headline1: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey),
+                headline2: TextStyle(
+                    fontFamily: "Poppins", fontSize: 14, color: Colors.grey))),
+        home: MyHomePage(
+          currentLocale: locale,
+          changeLanguage: changeLanguage,
+        ),
+        locale: locale);
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.changeLanguage, this.currentLocale})
@@ -230,7 +227,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ServicePointRepositoryRest servicePointRepository = ServicePointRepositoryRest();
+  ServicePointRepositoryRest servicePointRepository =
+      ServicePointRepositoryRest();
 
   var key = GlobalKey<FormState>();
   var keys = GlobalKey<FormState>();
@@ -241,9 +239,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ServicePointRepositoryRest servicePointRepositoryRest = ServicePointRepositoryRest();
+    ServicePointRepositoryRest servicePointRepositoryRest =
+        ServicePointRepositoryRest();
 
-    Future<List<ServicePoint>> servicePoints = servicePointRepositoryRest.getAll();
+    Future<List<ServicePoint>> servicePoints =
+        servicePointRepositoryRest.getAll();
     return Scaffold(
       appBar: getAppBar('service_points', context),
       body: SafeArea(
@@ -467,7 +467,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     FlatButton(
                       child: Icon(Icons.delete, color: Colors.blueGrey),
                       onPressed: () {
-                        servicePointRepository.remove(servicePoint).then((value) => setState((){}));
+                        servicePointRepository
+                            .remove(servicePoint)
+                            .then((value) => setState(() {}));
                       },
                     )
                   ],

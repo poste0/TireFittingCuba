@@ -12,7 +12,8 @@ class RequestCalendar extends StatefulWidget {
   ServicePoint servicePoint;
   String token;
 
-  RequestCalendar({Key key, ServicePoint servicePoint, String token}) : super(key: key) {
+  RequestCalendar({Key key, ServicePoint servicePoint, String token})
+      : super(key: key) {
     this.servicePoint = servicePoint;
     this.token = token;
   }
@@ -34,31 +35,34 @@ class _RequestCalendarState extends State<RequestCalendar> {
         padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
-            Expanded(flex: 10, child: Text(FlutterI18n.translate(context, 'calendar_for_service') + " " + servicePoint.address, style: getMainStyle(context))),
+            Expanded(
+                flex: 10,
+                child: Text(
+                    FlutterI18n.translate(context, 'calendar_for_service') +
+                        " " +
+                        servicePoint.address,
+                    style: getMainStyle(context))),
             Expanded(
               flex: 90,
               child: FutureBuilder(
-                future: RequestRepositoryRest().getRequests(servicePoint),
-                builder: (context, snapshot){
-                  if(snapshot.hasError){
-                    return Text(snapshot.error.toString());
-                  }
-                  else if(snapshot.hasData){
-                    List<Request> requests = snapshot.data as List<Request>;
+                  future: RequestRepositoryRest().getRequests(servicePoint),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (snapshot.hasData) {
+                      List<Request> requests = snapshot.data as List<Request>;
 
-                    return Container(
-                        child: SfCalendar(
-                          view: CalendarView.month,
-                          dataSource: RequestDataSource(requests),
-                          monthViewSettings: MonthViewSettings(showAgenda: true),
-                          initialSelectedDate: DateTime.now(),
-                        ));
-                  }
-                  else{
-                    return CircularProgressIndicator();
-                  }
-                }
-              ),
+                      return Container(
+                          child: SfCalendar(
+                        view: CalendarView.month,
+                        dataSource: RequestDataSource(requests),
+                        monthViewSettings: MonthViewSettings(showAgenda: true),
+                        initialSelectedDate: DateTime.now(),
+                      ));
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
             ),
           ],
         ),

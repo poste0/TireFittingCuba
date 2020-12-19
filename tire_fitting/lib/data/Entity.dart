@@ -6,7 +6,7 @@ abstract class Entity {
 
   Map<String, dynamic> toMap();
 
-  static List<Entity> fromMap(List<Map<String, dynamic>> map){
+  static List<Entity> fromMap(List<Map<String, dynamic>> map) {
     throw UnimplementedError();
   }
 }

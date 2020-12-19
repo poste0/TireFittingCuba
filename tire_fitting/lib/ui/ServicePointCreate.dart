@@ -36,7 +36,9 @@ class _ServicePointCreateState extends State<ServicePointCreate> {
                 controller: controllers[3],
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  return value.isEmpty ? FlutterI18n.translate(context, "enter_count_of_stuff") : null;
+                  return value.isEmpty
+                      ? FlutterI18n.translate(context, "enter_count_of_stuff")
+                      : null;
                 },
               ),
               FlatButton(
@@ -44,19 +46,16 @@ class _ServicePointCreateState extends State<ServicePointCreate> {
                     List<String> value =
                         controllers.map((e) => e.text).toList();
                     if (key.currentState.validate()) {
-                      String name = value[0] +
-                          ", " +
-                          value[1] +
-                          ", " +
-                          value[2];
-                      ServicePointRepositoryRest().add(
-                          ServicePoint(
-                              address: name,
-                              countOfStuff: int.parse(value[3]))).then((value) =>  Navigator.pop(context, value));
+                      String name =
+                          value[0] + ", " + value[1] + ", " + value[2];
+                      ServicePointRepositoryRest()
+                          .add(ServicePoint(
+                              address: name, countOfStuff: int.parse(value[3])))
+                          .then((value) => Navigator.pop(context, value));
                     }
                   },
-                  child:
-                      Text(FlutterI18n.translate(context, "ok"), style: Theme.of(context).textTheme.headline1)),
+                  child: Text(FlutterI18n.translate(context, "ok"),
+                      style: Theme.of(context).textTheme.headline1)),
             ],
           ),
         ),
@@ -69,9 +68,12 @@ class _ServicePointCreateState extends State<ServicePointCreate> {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-          labelText: FlutterI18n.translate(context, part), labelStyle: Theme.of(context).textTheme.headline1),
+          labelText: FlutterI18n.translate(context, part),
+          labelStyle: Theme.of(context).textTheme.headline1),
       validator: (value) {
-        return value.isEmpty ? FlutterI18n.translate(context, "enter_" + part) : null;
+        return value.isEmpty
+            ? FlutterI18n.translate(context, "enter_" + part)
+            : null;
       },
     );
   }

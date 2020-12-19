@@ -20,7 +20,8 @@ class RequestCreate extends StatefulWidget {
 }
 
 class _RequestCreateState extends State<RequestCreate> {
-  ServicePointRepositoryRest servicePointRepository = ServicePointRepositoryRest();
+  ServicePointRepositoryRest servicePointRepository =
+      ServicePointRepositoryRest();
   RequestRepositoryRest requestRepository = RequestRepositoryRest();
   Future<List<ServicePoint>> servicePoints;
   ServicePoint currentServicePoint;
@@ -46,13 +47,15 @@ class _RequestCreateState extends State<RequestCreate> {
 
   bool isFull = false;
 
-  TextFormField dateField (context) => TextFormField(
-    enabled: false,
-    controller: TextEditingController(),
-    validator: (value) {
-      return value == null ? FlutterI18n.translate(context, 'choose_day') : null;
-    },
-  );
+  TextFormField dateField(context) => TextFormField(
+        enabled: false,
+        controller: TextEditingController(),
+        validator: (value) {
+          return value == null
+              ? FlutterI18n.translate(context, 'choose_day')
+              : null;
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +79,23 @@ class _RequestCreateState extends State<RequestCreate> {
                       return AlertDialog(
                         content: Row(
                           children: [
-                            Expanded(child: Text(FlutterI18n.translate(context, 'time_is_busy'))),
+                            Expanded(
+                                child: Text(FlutterI18n.translate(
+                                    context, 'time_is_busy'))),
                             Expanded(
                               child: FlatButton(
-                                  onPressed: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => RequestCalendar(servicePoint: currentServicePoint)));
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RequestCalendar(
+                                                    servicePoint:
+                                                        currentServicePoint)));
                                   },
-                                  child: Text(FlutterI18n.translate(context, 'go_to_all_requests') + currentServicePoint.address)),
+                                  child: Text(FlutterI18n.translate(
+                                          context, 'go_to_all_requests') +
+                                      currentServicePoint.address)),
                             )
                           ],
                         ),
@@ -98,7 +111,8 @@ class _RequestCreateState extends State<RequestCreate> {
         ));
 
     return Scaffold(
-        appBar: getAppBar(FlutterI18n.translate(context, 'create_request'), context),
+        appBar: getAppBar(
+            FlutterI18n.translate(context, 'create_request'), context),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Form(
@@ -118,23 +132,25 @@ class _RequestCreateState extends State<RequestCreate> {
                             return Expanded(
                               child: DropdownButtonFormField<ServicePoint>(
                                 decoration: InputDecoration(
-                                    labelText: FlutterI18n.translate(context, 'service_point'),
+                                    labelText: FlutterI18n.translate(
+                                        context, 'service_point'),
                                     labelStyle: getMainStyle(context)),
                                 validator: (value) {
                                   return value == null
-                                      ? FlutterI18n.translate(context, 'enter_service_point')
+                                      ? FlutterI18n.translate(
+                                          context, 'enter_service_point')
                                       : null;
                                 },
                                 value: currentServicePoint,
-                                items: servicePoints
-                                    .map((e){
-                                      String address = e.address.length < 30 ? e.address : e.address.substring(0, 30) + "...";
+                                items: servicePoints.map((e) {
+                                  String address = e.address.length < 30
+                                      ? e.address
+                                      : e.address.substring(0, 30) + "...";
                                   return DropdownMenuItem<ServicePoint>(
                                     child: Text(address),
                                     value: e,
                                   );
-                                })
-                                    .toList(),
+                                }).toList(),
                                 onChanged: (value) {
                                   setState(() {
                                     currentServicePoint = value;
@@ -157,11 +173,13 @@ class _RequestCreateState extends State<RequestCreate> {
                       Expanded(
                         child: DropdownButtonFormField(
                             decoration: InputDecoration(
-                                labelText: FlutterI18n.translate(context, 'request_type'),
+                                labelText: FlutterI18n.translate(
+                                    context, 'request_type'),
                                 labelStyle: getMainStyle(context)),
                             validator: (value) {
                               return value == null
-                                  ? FlutterI18n.translate(context, 'enter_request_type')
+                                  ? FlutterI18n.translate(
+                                      context, 'enter_request_type')
                                   : null;
                             },
                             value: currentRequestType,
@@ -182,39 +200,44 @@ class _RequestCreateState extends State<RequestCreate> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(FlutterI18n.translate(context, 'day'), style: getMainStyle(context)),
+                      Text(FlutterI18n.translate(context, 'day'),
+                          style: getMainStyle(context)),
                       FlatButton(
-                        onPressed: () {
-                          showModalBottomSheet(context: context, builder: (builder){
-                            var time = DateTime.now();
-                            return Column(
-                              children: [
-                                Expanded(
-                                  child: CupertinoDatePicker(onDateTimeChanged: (value){
-                                    time = value;
-                                  },
-                                    mode: CupertinoDatePickerMode.date,
-                                    initialDateTime: time,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: FlatButton(
-                                    child: Text(FlutterI18n.translate(context, 'ok')),
-                                    onPressed: () => Navigator.pop(context, time),
-                                  ),
-                                )
-                              ],
-                            );
-                          }).then((value){
-                            setState(() {
-                              time = value;
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (builder) {
+                                  var time = DateTime.now();
+                                  return Column(
+                                    children: [
+                                      Expanded(
+                                        child: CupertinoDatePicker(
+                                          onDateTimeChanged: (value) {
+                                            time = value;
+                                          },
+                                          mode: CupertinoDatePickerMode.date,
+                                          initialDateTime: time,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: FlatButton(
+                                          child: Text(FlutterI18n.translate(
+                                              context, 'ok')),
+                                          onPressed: () =>
+                                              Navigator.pop(context, time),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                }).then((value) {
+                              setState(() {
+                                time = value;
+                              });
                             });
-                          });
-                        },
-
-
-                          child: Text(
-                              time == null ? FlutterI18n.translate(context, 'enter_day') : DateFormat("yyyy-MM-dd").format(time))),
+                          },
+                          child: Text(time == null
+                              ? FlutterI18n.translate(context, 'enter_day')
+                              : DateFormat("yyyy-MM-dd").format(time))),
                     ],
                   ),
                 ),
@@ -222,39 +245,54 @@ class _RequestCreateState extends State<RequestCreate> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(FlutterI18n.translate(context, 'time'), style: getMainStyle(context)),
+                      Text(FlutterI18n.translate(context, 'time'),
+                          style: getMainStyle(context)),
                       FlatButton(
                           onPressed: () => {
-                            showModalBottomSheet(context: context, builder: (builder){
-                              var start = TimeOfDay(hour: 0, minute: 0);
-                              var dateNow = DateTime.now();
-                              if(time != null && time.difference(dateNow).inDays < 1){
-                                start = TimeOfDay(hour: dateNow.hour, minute: dateNow.minute);
-                              }
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (builder) {
+                                      var start = TimeOfDay(hour: 0, minute: 0);
+                                      var dateNow = DateTime.now();
+                                      if (time != null &&
+                                          time.difference(dateNow).inDays < 1) {
+                                        start = TimeOfDay(
+                                            hour: dateNow.hour,
+                                            minute: dateNow.minute);
+                                      }
 
-                              var timeOfDay = TimeOfDay(hour: dateNow.hour, minute: dateNow.minute);
+                                      var timeOfDay = TimeOfDay(
+                                          hour: dateNow.hour,
+                                          minute: dateNow.minute);
 
-                              return Column(
-                                children: [
-                                  CupertinoTimerPicker(
-                                    mode: CupertinoTimerPickerMode.hm,
-                                    minuteInterval: 1,
-                                    initialTimerDuration: Duration(hours: dateNow.hour, minutes: dateNow.minute),
-                                    onTimerDurationChanged: (value){
-                                        timeOfDay = TimeOfDay(hour: value.inHours, minute: value.inMinutes % 60);
-                                    },
-                                  ),
-                                  FlatButton(onPressed: (){
-                                    Navigator.pop(context, timeOfDay);
-                                  }, child: Text(FlutterI18n.translate(context, 'ok')))
-                                ],
-                              );
-                            }).then((value){
-                              setState(() {
-                                timeOfDay = value;
-                              });
-                            })
-
+                                      return Column(
+                                        children: [
+                                          CupertinoTimerPicker(
+                                            mode: CupertinoTimerPickerMode.hm,
+                                            minuteInterval: 1,
+                                            initialTimerDuration: Duration(
+                                                hours: dateNow.hour,
+                                                minutes: dateNow.minute),
+                                            onTimerDurationChanged: (value) {
+                                              timeOfDay = TimeOfDay(
+                                                  hour: value.inHours,
+                                                  minute: value.inMinutes % 60);
+                                            },
+                                          ),
+                                          FlatButton(
+                                              onPressed: () {
+                                                Navigator.pop(
+                                                    context, timeOfDay);
+                                              },
+                                              child: Text(FlutterI18n.translate(
+                                                  context, 'ok')))
+                                        ],
+                                      );
+                                    }).then((value) {
+                                  setState(() {
+                                    timeOfDay = value;
+                                  });
+                                })
                               },
                           child: Text(timeOfDay == null
                               ? FlutterI18n.translate(context, 'enter_time')
@@ -267,10 +305,12 @@ class _RequestCreateState extends State<RequestCreate> {
                     keyboardType: TextInputType.number,
                     controller: wheelRadiusController,
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, 'wheel_radius'),
+                        labelText:
+                            FlutterI18n.translate(context, 'wheel_radius'),
                         labelStyle: getMainStyle(context)),
                     validator: (value) {
-                      final String message = FlutterI18n.translate(context, 'wheel_radius_range');
+                      final String message =
+                          FlutterI18n.translate(context, 'wheel_radius_range');
                       try {
                         return int.parse(value) < 13 || int.parse(value) > 18
                             ? message
