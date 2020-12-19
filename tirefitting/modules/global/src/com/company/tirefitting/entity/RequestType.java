@@ -1,6 +1,7 @@
 package com.company.tirefitting.entity;
 
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 
@@ -22,7 +23,7 @@ public enum RequestType implements EnumClass<String> {
     @Nullable
     public static RequestType fromId(String id) {
         for (RequestType at : RequestType.values()) {
-            if (at.getId().equals(id)) {
+            if (at.getId().equals(StringUtils.lowerCase(id))) {
                 return at;
             }
         }

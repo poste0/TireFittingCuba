@@ -7,7 +7,7 @@
     <data readOnly="true">
         <collection id="servicePointsDc"
                     class="com.company.tirefitting.entity.ServicePoint">
-            <view extends="_local"/>
+            <view extends="service_point"/>
             <loader id="servicePointsDl">
                 <query>
                     <![CDATA[select e from tirefitting_ServicePoint e]]>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns="http://schemas.haulmont.com/cuba/rest-services-v2.xsd">
+    <service name="tirefitting_ServicePointService">
+        <method name="delete">
+            <param name="id"/>
+        </method>
+    </service>
+    <service name="tirefitting_RequestService">
+        <method name="add">
+            <param name="request" type="com.company.tirefitting.entity.Request"/>
+        </method>
+        <method name="add">
+            <param name="id"/>
+            <param name="requestType"/>
+            <param name="time"/>
+            <param name="servicePoint"/>
+            <param name="wheelRadius"/>
+        </method>
+    </service>
+</services>
+

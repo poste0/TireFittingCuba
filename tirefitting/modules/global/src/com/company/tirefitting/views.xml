@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
+    <view entity="tirefitting_ServicePoint" name="service_point" extends="_local">
+        <property name="address"/>
+    </view>
+    <view entity="tirefitting_Request" name="request" extends="_local">
+        <property name="servicePoint" view="_minimal">
+            <property name="id"/>
+            <property name="address"/>
+            <property name="countOfStuff"/>
+        </property>
+    </view>
 </views>

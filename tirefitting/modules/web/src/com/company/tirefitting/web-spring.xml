@@ -12,6 +12,8 @@
         <property name="remoteServices">
             <map>
                 <entry key="tirefitting_RequestService" value="com.company.tirefitting.service.RequestService"/>
+                <entry key="tirefitting_ServicePointService"
+                       value="com.company.tirefitting.service.ServicePointService"/>
             </map>
         </property>
     </bean>

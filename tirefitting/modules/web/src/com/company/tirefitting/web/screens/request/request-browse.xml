@@ -7,10 +7,7 @@
     <data readOnly="true">
         <collection id="requestsDc"
                     class="com.company.tirefitting.entity.Request">
-            <view extends="_local">
-                <property name="servicePoint" view="_minimal">
-                    <property name="address"/>
-                </property>
+            <view extends="request">
             </view>
             <loader id="requestsDl">
                 <query>
