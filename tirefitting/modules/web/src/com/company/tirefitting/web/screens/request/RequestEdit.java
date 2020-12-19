@@ -86,7 +86,6 @@ public class RequestEdit extends StandardEditor<Request> {
                         )
                 );
 
-                System.out.println(requests);
 
                 LocalDateTime dateFieldValue = dateField.getValue().with(LocalTime.of(0, 0)).plusHours(timeValue.getHour());
                 dateFieldValue = dateFieldValue.plusMinutes(timeValue.getMinute());
@@ -101,8 +100,6 @@ public class RequestEdit extends StandardEditor<Request> {
                     return isBusy(request, finalDateFieldValue, requestService.getEndTime(addedRequest));
                 }).count();
 
-                System.out.println("Workers: " + workers);
-                System.out.println("Busy workers: " + busyWorkers);
                 if(workers - busyWorkers <= 0){
                     throw new ValidationException("There is no stuff at this time");
                 }
@@ -113,11 +110,6 @@ public class RequestEdit extends StandardEditor<Request> {
     private boolean isBusy(Request request, LocalDateTime addedRequestTime, LocalDateTime addedRequestEndTime){
         LocalDateTime requestTime = request.getTime();
         LocalDateTime requestEndTime = requestService.getEndTime(request);
-
-        System.out.println("Request time: " + requestTime.toString());
-        System.out.println("Request end time: " + requestEndTime.toString());
-        System.out.println("Added request time: " + addedRequestTime.toString());
-        System.out.println("Added request end time: " + addedRequestEndTime.toString());
 
         return (isAfterOrEqual(addedRequestTime, requestTime) && isBeforeOrEqual(addedRequestTime, requestEndTime)) ||
                 (isAfterOrEqual(addedRequestEndTime, requestTime) && isBeforeOrEqual(addedRequestEndTime, requestEndTime)) ||

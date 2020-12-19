@@ -86,12 +86,6 @@ public class RequestServiceBean implements RequestService {
 
     @Override
     public UUID add(String id, String requestType, String time, String servicePoint, Integer wheelRadius) {
-        System.out.println(id);
-        System.out.println(requestType);
-        System.out.println(time);
-        System.out.println(servicePoint);
-        System.out.println(wheelRadius);
-
         Request request = dataManager.create(Request.class);
         request.setId(UUID.fromString(id));
         request.setRequestType(RequestType.fromId(requestType));
